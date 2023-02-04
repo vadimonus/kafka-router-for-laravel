@@ -34,8 +34,12 @@ RUN mkdir /tmp/ext-rdkafka-sources \
     && docker-php-ext-enable rdkafka \
     && rm -rf /tmp/ext-rdkafka-sources
 
+ARG XDEBUG_INSTALL=0
 ARG XDEBUG_VERSION
-RUN pecl install xdebug${XDEBUG_VERSION} \
-    && docker-php-ext-enable xdebug
+RUN test "$XDEBUG_INSTALL" -eq "0" \
+    || ( \
+      pecl install xdebug${XDEBUG_VERSION} \
+      && docker-php-ext-enable xdebug \
+    )
 
 WORKDIR /var/www
