@@ -1,0 +1,53 @@
+{
+    "name": "vadimon/kafka-router-for-laravel",
+    "description": "Package for Laravel to route consumed kafka messages to controllers same way as HTTP-requests",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "kafka",
+        "rdkafka",
+        "librdkafka",
+        "php-rdkafka"
+    ],
+    "homepage": "https://github.com/vadimonus/kafka-router-for-laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vadim Dvorovenko",
+            "email": "vadimon@mail.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8",
+        "ext-rdkafka": ">=3.1.2",
+        "laravel/framework": "^6.20.1|^7.29.1|^8.12.1|>=9"
+    },
+    "require-dev": {
+        "kwn/php-rdkafka-stubs": ">=1.3.1",
+        "orchestra/testbench": ">=3.9",
+        "phpunit/phpunit": "^9.5.28"
+    },
+    "suggest": {
+        "vadimon/kafka-consumer-for-laravel": "Worker command for Laravel for consuming messages from Kafka"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vadimon\\Laravel\\Kafka\\Router\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vadimon\\Laravel\\Kafka\\Router\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "KafkaRoute": "Vadimon\\Laravel\\Kafka\\Router\\Facades\\KafkaRouter"
+            }
+        }
+    }
+}
