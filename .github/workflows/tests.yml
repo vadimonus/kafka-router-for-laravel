@@ -40,10 +40,14 @@ jobs:
             LARAVEL: "8"
           - PHP: "8.1"
             LARAVEL: "9"
+          - PHP: "8.1"
+            LARAVEL: "10"
           - PHP: "8.2"
             LARAVEL: "8"
           - PHP: "8.2"
             LARAVEL: "9"
+          - PHP: "8.2"
+            LARAVEL: "10"
 
     name: "PHP ${{ matrix.PHP }}, Laravel ${{ matrix.Laravel }}"
 
