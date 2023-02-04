@@ -1,0 +1,13 @@
+*.md diff=markdown
+*.php diff=php
+
+/.github export-ignore
+/docker export-ignore
+/tests export-ignore
+/.env.highest export-ignore
+/.env.lowest export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/changelog.md export-ignore
+/docker-compose.yml export-ignore
+/phpunit.xml export-ignore
