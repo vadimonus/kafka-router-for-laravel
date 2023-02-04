@@ -48,5 +48,8 @@
                 "KafkaRoute": "Vadimon\\Laravel\\Kafka\\Router\\Facades\\KafkaRoute"
             }
         }
+    },
+    "archive": {
+        "exclude": ["*", "!/src", "!/stubs"]
     }
 }
