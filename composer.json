@@ -1,6 +1,6 @@
 {
     "name": "vadimon/kafka-router-for-laravel",
-    "description": "Package for Laravel to route consumed kafka messages to controllers same way as HTTP-requests",
+    "description": "Package for Laravel to route consumed kafka messages to controllers same way as HTTP requests",
     "type": "library",
     "keywords": [
         "laravel",
@@ -14,7 +14,6 @@
     "authors": [
         {
             "name": "Vadim Dvorovenko",
-            "email": "vadimon@mail.ru",
             "role": "Developer"
         }
     ],
@@ -46,7 +45,7 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "KafkaRoute": "Vadimon\\Laravel\\Kafka\\Router\\Facades\\KafkaRouter"
+                "KafkaRoute": "Vadimon\\Laravel\\Kafka\\Router\\Facades\\KafkaRoute"
             }
         }
     }
