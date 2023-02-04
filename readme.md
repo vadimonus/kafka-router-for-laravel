@@ -59,7 +59,7 @@ method.
 The handler for messages is defined by `KafkaRoute::topic` method.
 
 ```php
-KafkaRoute::topic('FirstTopic', 'KafkaController@hanldeFirst']);
+KafkaRoute::topic('FirstTopic', 'KafkaController@handleFirst']);
 KafkaRoute::topic('SecondTopic', [KafkaController::class, 'handleSecond']);
 KafkaRoute::topic('ThirdTopic', InvokableController::class);
 KafkaRoute::topic('FourthTopic', function (\RdKafka\Message $message) {
@@ -87,10 +87,10 @@ You can use `KafkaRoute::connection` to specify different handlers for different
 ```php
 KafkaRoute::connection('FirstConnection', base_path('routes/kafka/first.php'));
 KafkaRoute::connection('SecondConnection', function () {
-    KafkaRoute::topic('FirstTopic', 'KafkaController@hanldeFirstTopicOfSecondConnection']);
-    KafkaRoute::topic('*', 'KafkaController@hanldeAnyTopicOfSecondConnection']);
+    KafkaRoute::topic('FirstTopic', 'KafkaController@handleFirstTopicOfSecondConnection']);
+    KafkaRoute::topic('*', 'KafkaController@handleAnyTopicOfSecondConnection']);
 });
-KafkaRoute::topic('ThirdTopic', 'KafkaController@hanldeThirdTopicOfAnyConnection']);
+KafkaRoute::topic('ThirdTopic', 'KafkaController@handleThirdTopicOfAnyConnection']);
 ```
 
 Connection names are case-sensitive. `*` mean any connection.
@@ -101,7 +101,7 @@ You can assign middleware in route table
 ```php
 // Middleware, defined as class
 KafkaRoute::middleware(KaffkaMiddleware::class, function () {
-    KafkaRoute::topic('*', 'KafkaController@hanldeMessage']);
+    KafkaRoute::topic('*', 'KafkaController@handleMessage']);
 });
 // Middleware, defined as closure
 $middleware = function (\RdKafka\Message $message, \Closure $next) {
@@ -109,11 +109,11 @@ $middleware = function (\RdKafka\Message $message, \Closure $next) {
     $next($message);
 }
 KafkaRoute::middleware($middleware, function () {
-    KafkaRoute::topic('*', 'KafkaController@hanldeMessage']);
+    KafkaRoute::topic('*', 'KafkaController@handleMessage']);
 });
 // Multiple middlewares at once
 KafkaRoute::middleware([Middleware1::class, Middleware2::class], function () {
-    KafkaRoute::topic('*', 'KafkaController@hanldeMessage']);
+    KafkaRoute::topic('*', 'KafkaController@handleMessage']);
 });
 ```
 
@@ -122,7 +122,7 @@ KafkaRoute::middleware([Middleware1::class, Middleware2::class], function () {
 Groups allow to specify `connection` and `middleware` in one call.
 ```php
 KafkaRoute::group(['connection'=> 'SecondConnection', 'middleware' => KafkaMiddleware::class], function () {
-    KafkaRoute::topic('*', 'KafkaController@hanldeMessage']);
+    KafkaRoute::topic('*', 'KafkaController@handleMessage']);
 });
 ```
 
