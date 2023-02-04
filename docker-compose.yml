@@ -7,9 +7,9 @@ services:
       context: docker/php
       dockerfile: Dockerfile
       args:
-        EXT_RDKAFKA_TAG: ${EXT_RDKAFKA_TAG:master}
-        LIBRDKAFKA_TAG: ${LIBRDKAFKA_TAG:master}
-        PHP_IMAGE_TAG: ${PHP_IMAGE_TAG:cli}
-        XDEBUG_VERSION: ${XDEBUG_VERSION:}
+        EXT_RDKAFKA_TAG: ${EXT_RDKAFKA_TAG:-master}
+        LIBRDKAFKA_TAG: ${LIBRDKAFKA_TAG:-master}
+        PHP_IMAGE_TAG: ${PHP_IMAGE_TAG:-cli}
+        XDEBUG_VERSION: ${XDEBUG_VERSION:-}
     volumes:
       - .:/var/www

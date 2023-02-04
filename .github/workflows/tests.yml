@@ -1,0 +1,124 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        include:
+          - PHP: "7.3"
+            LARAVEL: "6"
+          - PHP: "7.3"
+            LARAVEL: "7"
+          - PHP: "7.3"
+            LARAVEL: "8"
+          - PHP: "7.4"
+            LARAVEL: "6"
+          - PHP: "7.4"
+            LARAVEL: "7"
+          - PHP: "7.4"
+            LARAVEL: "8"
+          - PHP: "8.0"
+            LARAVEL: "6"
+          - PHP: "8.0"
+            LARAVEL: "7"
+          - PHP: "8.0"
+            LARAVEL: "8"
+          - PHP: "8.0"
+            LARAVEL: "9"
+          - PHP: "8.1"
+            LARAVEL: "6"
+          - PHP: "8.1"
+            LARAVEL: "7"
+          - PHP: "8.1"
+            LARAVEL: "8"
+          - PHP: "8.1"
+            LARAVEL: "9"
+          - PHP: "8.2"
+            LARAVEL: "6"
+          - PHP: "8.2"
+            LARAVEL: "7"
+          - PHP: "8.2"
+            LARAVEL: "8"
+          - PHP: "8.2"
+            LARAVEL: "9"
+
+    name: "PHP ${{ matrix.PHP }}, Laravel ${{ matrix.Laravel }}"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start containers
+        env:
+          EXT_RDKAFKA_TAG: "master"
+          LIBRDKAFKA_TAG: "master"
+          PHP_IMAGE_TAG: "${{ matrix.PHP }}-cli"
+          XDEBUG_VERSION: ""
+        run: docker-compose -f docker-compose.yml up -d --build
+
+      - name: Composer update
+        run: docker-compose -f docker-compose.yml run php composer update --with="laravel/framework:^${{ matrix.LARAVEL }}"
+
+      - name: Run tests
+        run: docker-compose -f docker-compose.yml run php vendor/bin/phpunit
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f docker-compose.yml down
+
+  php-tests-highest-lowest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        include:
+          - ENVIRONMENT_NAME: "highest"
+            EXT_RDKAFKA_TAG: "master"
+            LIBRDKAFKA_TAG: "master"
+            PHP_IMAGE_TAG: "cli"
+            PREFER_LOWEST: ""
+            WITH: ""
+            XDEBUG_VERSION: ""
+          - ENVIRONMENT_NAME: "lowest"
+            EXT_RDKAFKA_TAG: "3.1.2"
+            LIBRDKAFKA_TAG: "v0.11.5"
+            PHP_IMAGE_TAG: "7.3-cli"
+            PREFER_LOWEST: "--prefer-lowest"
+            WITH: ""
+            XDEBUG_VERSION: "-3.1.6"
+
+    name: ${{ matrix.ENVIRONMENT_NAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start containers
+        env:
+          EXT_RDKAFKA_TAG: ${{ matrix.EXT_RDKAFKA_TAG }}
+          LIBRDKAFKA_TAG: ${{ matrix.LIBRDKAFKA_TAG }}
+          PHP_IMAGE_TAG: ${{ matrix.PHP_IMAGE_TAG }}
+          XDEBUG_VERSION: ${{ matrix.XDEBUG_VERSION }}
+        run: docker-compose -f docker-compose.yml up -d --build
+
+      - name: Composer update
+        run: docker-compose -f docker-compose.yml run php composer update ${{ matrix.PREFER_LOWEST }} ${{ matrix.WITH }}
+
+      - name: Run tests
+        run: docker-compose -f docker-compose.yml run php vendor/bin/phpunit
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f docker-compose.yml down
