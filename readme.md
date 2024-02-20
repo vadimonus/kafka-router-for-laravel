@@ -32,12 +32,11 @@ Register `KafkaRouteServiceProvider` in `config/app.php`
 
 ### Consume
 
-This package is aimed only to route messages. You need some other solution to consume message. You may
-use `vadimon/kafka-consumer-for-laravel` package for consume command.
+This package is aimed only to route messages. You need some other solution to consume message.
 
 ### Route
 
-Simply pass consumed message to `KafkaRoute::dispatch`, and it will be routed to controller, specified by route map
+Simply pass consumed message to `KafkaRoute::dispatch`, and it will be routed to controller, specified by route map.
 
 ```php
 KafkaRoute::dispatch($message);
